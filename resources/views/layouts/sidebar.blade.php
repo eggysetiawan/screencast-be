@@ -5,25 +5,47 @@
         </header>
         <a href="#" class="block px-2 py-2">Dashboard</a>
     </div>
-    <div class="mb-8">
-        <header class="font-medium px-2 text-gray-300 text-xs uppercase">
-            Playlist
-        </header>
-        <a href="#" class="block px-2 py-2">Create</a>
-        <a href="#" class="block px-2 py-2">Table</a>
-    </div>
-    <div class="mb-8">
-        <header class="font-medium px-2 text-gray-300 text-xs uppercase">
-            Category
-        </header>
-        <a href="#" class="block px-2 py-2">Create</a>
-        <a href="#" class="block px-2 py-2">Table</a>
-    </div>
+    @can('create playlist')
+        <div class="mb-8">
+            <header class="font-medium px-2 text-gray-300 text-xs uppercase">
+                Playlist
+            </header>
+            <a href="#" class="block px-2 py-2">Create</a>
+            <a href="#" class="block px-2 py-2">Table</a>
+        </div>
+    @endcan
+
+    @can('create tags')
+        <div class="mb-8">
+            <header class="font-medium px-2 text-gray-300 text-xs uppercase">
+                Tags
+            </header>
+            <a href="#" class="block px-2 py-2">Create</a>
+            <a href="#" class="block px-2 py-2">Table</a>
+        </div>
+    @endcan
+
+    @can('show users')
+        <div class="mb-5">
+            <header class="font-medium px-2 text-gray-300 text-xs uppercase">
+                User
+            </header>
+            <a href="#" class="block px-2 py-2">Table</a>
+        </div>
+    @endcan
+
+
     <div class="mb-5">
-        <header class="font-medium px-2 text-gray-300 text-xs uppercase">
-            User
-        </header>
-        <a href="#" class="block px-2 py-2">Create</a>
-        <a href="#" class="block px-2 py-2">Table</a>
+
+        <!-- Authentication -->
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+
+            <a href="route('logout')" class="block px-2 py-2" onclick="event.preventDefault();
+                                    this.closest('form').submit();">
+                {{ __('Log Out') }}
+            </a>
+        </form>
     </div>
+
 </div>

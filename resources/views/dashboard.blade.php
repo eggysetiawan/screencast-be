@@ -1,4 +1,7 @@
 <x-app-layout>
+    <x-slot name="title">
+        Dashboard
+    </x-slot>
     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt fugit corporis maxime cumque rerum. Ex ratione sint
     ipsa rerum alias excepturi, distinctio dicta? Sapiente molestias architecto quod ex officiis accusantium, maxime
     nesciunt ad necessitatibus ducimus voluptate inventore accusamus deserunt blanditiis, consequatur aliquid,

@@ -18,12 +18,16 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
+    <div class="min-h-screen">
         <div class="flex">
             @include('layouts.sidebar')
 
             <!-- Page Content -->
             <main class="w-4/5 p-5">
+                @if ($header)
+                    <h1 class="font-light text-2xl">{{ $header }}</h1>
+                    <div class="h-1 mt-2 mb-5 bg-blue-800 w-20 rounded-full"></div>
+                @endif
                 {{ $slot }}
             </main>
         </div>

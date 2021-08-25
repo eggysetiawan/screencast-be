@@ -12,6 +12,11 @@ class Playlist extends Model
 
     protected $fillable = ['name', 'slug', 'price', 'description', 'thumbnail'];
 
+    public function getPictureAttribute()
+    {
+        return asset('storage/' . $this->thumbnail);
+    }
+
     // relationship
     public function author()
     {

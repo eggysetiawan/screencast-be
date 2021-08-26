@@ -23,8 +23,9 @@ class PlaylistController extends Controller
     public function store(PlaylistRequest $request)
     {
         $attr = $request->validated();
-        // dd($attr['tags']);
-        $attr['slug'] = (new SlugService)->slug([$request->name]);
+        $attr['slug'] = SlugService::slug([$request->name]);
+        // $attr['slug'] = getSlug([$request->name]); // this function is from app/helper.php
+        dd($attr['slug']);
         $attr['thumbnail'] = $request->file('thumbnail')->store('images/playlist');
 
         DB::transaction(function () use ($attr) {

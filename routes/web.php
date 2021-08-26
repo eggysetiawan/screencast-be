@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
         Route::get('table', [PlaylistController::class, 'table'])->name('table');
         Route::get('{playlist:slug}/edit', [PlaylistController::class, 'edit'])->name('edit');
         Route::put('{playlist:slug}/update', [PlaylistController::class, 'update'])->name('update');
+        Route::delete('{playlist:slug}/delete', [PlaylistController::class, 'destroy'])->name('destroy');
     });
 });
 

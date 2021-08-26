@@ -24,7 +24,7 @@
 
             <!-- Page Content -->
             <main class="w-4/5 p-5">
-                @if ($header)
+                @if (@$header)
                     <h1 class="font-light text-2xl">{{ $header }}</h1>
                     <div class="h-1 mt-2 mb-5 bg-blue-800 w-20 rounded-full"></div>
                 @endif

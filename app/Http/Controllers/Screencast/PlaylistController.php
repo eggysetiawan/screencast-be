@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Screencast\PlaylistRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class PlaylistController extends Controller
 {
@@ -32,7 +33,7 @@ class PlaylistController extends Controller
     {
         $playlists = Playlist::query()
             ->where('user_id', auth()->id())
-            ->paginate(2);
+            ->paginate(10);
 
         return view('playlists.table', compact('playlists'));
     }
@@ -49,6 +50,16 @@ class PlaylistController extends Controller
         $playlist->update($attr);
 
         return redirect(route('playlists.table'));
+    }
+
+    public function destroy(Playlist $playlist)
+    {
+        DB::transaction(function () use ($playlist) {
+            $playlist->tags()->detach();
+            $playlist->delete();
+            Storage::delete($playlist->thumbnail);
+        });
+        return back();
     }
 
     public function getThumbnail($request, $playlist)

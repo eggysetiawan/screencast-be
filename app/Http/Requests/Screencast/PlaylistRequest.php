@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests\Screencast;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Screencast\Tag;
 use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 
 class PlaylistRequest extends FormRequest
 {
@@ -26,6 +27,7 @@ class PlaylistRequest extends FormRequest
     {
         return [
             'thumbnail' => ['image', 'mimes:png,jpg,jpeg', Rule::requiredIf(request()->routeIs('playlists.store'))],
+            'tags' => ['required', 'array', 'in:' . implode(",", Tag::validTag())],
             'name' => ['required', 'string'],
             'price' => ['numeric', 'required'],
             'description' => ['required', 'string'],

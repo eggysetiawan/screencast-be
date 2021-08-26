@@ -32,4 +32,16 @@
         <span class="text-red-500 mt-2">{{ $message }}</span>
     @enderror
 </div>
+
+<div class="mb-6">
+    <x-label for="tags" :value="__('Tag')" />
+    <x-select name="tags[]" id="tags" multiple>
+        @foreach ($tags as $id => $name)
+            <option value="{{ $id }}">{{ $name }}</option>
+        @endforeach
+    </x-select>
+    @error('tags')
+        <span class="text-red-500 mt-2">{{ $message }}</span>
+    @enderror
+</div>
 <x-button>{{ $submit ?? 'Create' }}</x-button>

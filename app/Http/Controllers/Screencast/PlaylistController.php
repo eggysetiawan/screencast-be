@@ -3,29 +3,34 @@
 namespace App\Http\Controllers\Screencast;
 
 use App\Services\SlugService;
+use App\Models\Screencast\Tag;
+use Illuminate\Support\Facades\DB;
 use App\Models\Screencast\Playlist;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\Screencast\PlaylistRequest;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
+use App\Http\Requests\Screencast\PlaylistRequest;
 
 class PlaylistController extends Controller
 {
     public function create()
     {
-        return view('playlists.create', [
-            'playlist' => new Playlist(),
-        ]);
+        $playlist = new Playlist();
+        $tags = Tag::selectTag();
+        return view('playlists.create', compact('playlist', 'tags'));
     }
 
     public function store(PlaylistRequest $request)
     {
         $attr = $request->validated();
-        $attr['slug'] = (new SlugService)->slug($request->name);
+        // dd($attr['tags']);
+        $attr['slug'] = (new SlugService)->slug([$request->name]);
         $attr['thumbnail'] = $request->file('thumbnail')->store('images/playlist');
 
-        auth()->user()->playlists()->create($attr);
+        DB::transaction(function () use ($attr) {
+            $playlists = auth()->user()->playlists()->create($attr);
+            $playlists->tags()->attach($attr['tags']);
+        });
         return back();
     }
 
@@ -40,7 +45,8 @@ class PlaylistController extends Controller
 
     public function edit(Playlist $playlist)
     {
-        return view('playlists.edit', compact('playlist'));
+        $tags = Tag::selectTag();
+        return view('playlists.edit', compact('playlist', 'tags'));
     }
 
     public function update(PlaylistRequest $request, Playlist $playlist)

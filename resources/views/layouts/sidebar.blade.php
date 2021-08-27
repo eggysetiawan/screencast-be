@@ -5,7 +5,7 @@
         </header>
         <a href="{{ route('dashboard') }}" class="block px-2 py-2">Dashboard</a>
     </div>
-    @can('create playlist')
+    @can('create playlists')
         <div class="mb-8">
             <header class="font-medium px-2 text-gray-300 text-xs uppercase">
                 Playlist

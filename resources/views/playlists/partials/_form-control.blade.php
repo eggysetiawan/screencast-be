@@ -37,7 +37,8 @@
     <x-label for="tags" :value="__('Tag')" />
     <x-select name="tags[]" id="tags" multiple>
         @foreach ($tags as $id => $name)
-            <option value="{{ $id }}">{{ $name }}</option>
+            <option {{ $playlist->tags()->find($id) ? 'selected' : '' }} value="{{ $id }}">
+                {{ $name }}</option>
         @endforeach
     </x-select>
     @error('tags')

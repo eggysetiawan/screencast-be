@@ -25,12 +25,11 @@ class PlaylistController extends Controller
         $attr = $request->validated();
         $attr['slug'] = SlugService::slug([$request->name]);
         // $attr['slug'] = getSlug([$request->name]); // this function is from app/helper.php
-        dd($attr['slug']);
         $attr['thumbnail'] = $request->file('thumbnail')->store('images/playlist');
 
         DB::transaction(function () use ($attr) {
             $playlists = auth()->user()->playlists()->create($attr);
-            $playlists->tags()->attach($attr['tags']);
+            $playlists->tags()->sync($attr['tags']);
         });
         return back();
     }
@@ -54,7 +53,12 @@ class PlaylistController extends Controller
     {
         $attr = $request->validated();
         $attr['thumbnail'] = $this->getThumbnail($request, $playlist);
-        $playlist->update($attr);
+
+        DB::transaction(function () use ($playlist, $attr) {
+            $playlist->update($attr);
+            $playlist->tags()->sync($attr['tags']);
+        });
+
 
         return redirect(route('playlists.table'));
     }
@@ -62,9 +66,9 @@ class PlaylistController extends Controller
     public function destroy(Playlist $playlist)
     {
         DB::transaction(function () use ($playlist) {
+            Storage::delete($playlist->thumbnail);
             $playlist->tags()->detach();
             $playlist->delete();
-            Storage::delete($playlist->thumbnail);
         });
         return back();
     }

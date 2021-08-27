@@ -17,7 +17,8 @@
                 @endcan
             </tr>
         </thead>
-        <tbody>
+         <tbody>
+        
             @foreach ($tags as $i => $tag)
                 <tr class="{{ $loop->iteration % 2 == 0 ? 'bg-gray-300' : '' }}">
                     <x-td>{{ $i + $tags->firstItem() }}</x-td>

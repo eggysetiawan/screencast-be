@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Screencast\PlaylistController;
-use App\Http\Controllers\Screencast\TagController;
+use App\Http\Controllers\Screencast\{PlaylistController, TagController, VideoController};
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -13,6 +13,7 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
 
+    // playlists
     Route::prefix('playlists')->name('playlists.')->middleware('permission:create playlists')->group(function () {
         Route::get('create', [PlaylistController::class, 'create'])->name('create');
         Route::post('create', [PlaylistController::class, 'store'])->name('store');
@@ -22,6 +23,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('{playlist:slug}/delete', [PlaylistController::class, 'destroy'])->name('destroy');
     });
 
+    // tags
     Route::prefix('tags')->name('tags.')->group(function () {
         Route::middleware('permission:create tags')->group(function () {
             Route::get('create', [TagController::class, 'create'])->name('create');
@@ -35,6 +37,12 @@ Route::middleware('auth')->group(function () {
             Route::put('{tag:slug}/update', [TagController::class, 'update'])->name('update');
             Route::delete('{tag:slug}/delete', [TagController::class, 'destroy'])->name('destroy');
         });
+    });
+
+    // videos
+    Route::prefix('videos/{playlist:slug}')->name('videos.')->middleware('permission:create playlists')->group(function () {
+        Route::get('create', [VideoController::class, 'create'])->name('create');
+        Route::post('store', [VideoController::class, 'store'])->name('store');
     });
 });
 

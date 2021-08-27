@@ -35,7 +35,10 @@
                     <x-td>{{ $item->created_at->format('d F, Y') }}
                     </x-td>
                     <x-td>
-                        <a class="text-blue-500 hover:text-blue-900 font-medium underline uppercase text-xs mr-2"
+                        <a class="text-yellow-500 hover:text-yellow-900 font-medium underline uppercase text-xs"
+                            href="{{ route('videos.create', $item->slug) }}">Add
+                        </a>
+                        <a class="text-blue-500 hover:text-blue-900 font-medium underline uppercase text-xs mx-2"
                             href="{{ route('playlists.edit', $item->slug) }}">Edit
                         </a>
                         <div x-data="{open: false}" class="inline">

@@ -22,7 +22,10 @@
                 <tr class="{{ $loop->iteration % 2 == 0 ? 'bg-gray-200 ' : 'bg-white ' }} ">
                     <x-td>{{ $i + $playlists->firstItem() }}</x-td>
                     <x-td>
-                        {{ $item->name }}
+                        <a href="{{ route('videos.table', $item->slug) }}"
+                            class="block text-blue-500 hover:underline hover:text-blue-600">
+                            {{ $item->name }}
+                        </a>
                         <div>
                             <div>
                                 @foreach ($item->tags as $tag)

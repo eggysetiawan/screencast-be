@@ -36,4 +36,28 @@ class VideoController extends Controller
         $playlist->videos()->create($attr);
         return back();
     }
+
+    public function edit(Video $video)
+    {
+        $this->authorize('update', $video->playlist);
+
+        return view('videos.edit', compact('video'));
+    }
+
+    public function update(VideoRequest $request, Video $video)
+    {
+        $this->authorize('update', $video->playlist);
+
+        $attr = $request->validated();
+        $attr['is_intro'] = $request->intro ? true : false;
+
+        $video->update($attr);
+        return redirect(route('videos.table', $video->playlist->slug));
+    }
+
+    public function destroy(Video $video)
+    {
+        $video->delete();
+        return back();
+    }
 }

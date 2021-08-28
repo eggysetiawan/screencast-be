@@ -17,8 +17,8 @@
                 @endcan
             </tr>
         </thead>
-         <tbody>
-        
+        <tbody>
+
             @foreach ($tags as $i => $tag)
                 <tr class="{{ $loop->iteration % 2 == 0 ? 'bg-gray-300' : '' }}">
                     <x-td>{{ $i + $tags->firstItem() }}</x-td>
@@ -26,10 +26,10 @@
                     <x-td>{{ $tag->playlists_count }}</x-td>
                     @can('modify tags')
                         <x-td>
-                            <a href="{{ route('tags.edit', $tag->slug) }}"
-                                class="text-xs uppercase underline text-blue-500 mr-2">Edit
-                            </a>
-                            <div x-data="{open: false}" class="inline">
+                            <x-edit-anchor href="{{ route('tags.edit', $tag->slug) }}">
+                                Edit
+                            </x-edit-anchor>
+                            <div x-data=" {open: false}" class="inline">
                                 <x-modal state="open" x-show="open" title="Are you sure want to delete?"
                                     headerClass="bg-blue-800">
                                     <form action="{{ route('tags.destroy', $tag->slug) }}" method="post"

@@ -42,7 +42,8 @@
 <div class="mb-6">
     <label for="intro" class="flex items-center">
         <input type="checkbox" name="intro" id="intro"
-            class="mr-2 focus:outline-none focus:ring-transparent text-blue-500 rounded border-gray-300">
+            class="mr-2 focus:outline-none focus:ring-transparent text-blue-500 rounded border-gray-300"
+            {{ $video->is_intro ? 'checked' : null }}>
         <span class="select-none font-medium uppercase text-sm">Intro</span>
     </label>
 </div>

@@ -10,6 +10,7 @@ Route::get('/', function () {
 });
 
 
+
 Route::middleware('auth')->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
 
@@ -40,10 +41,13 @@ Route::middleware('auth')->group(function () {
     });
 
     // videos
-    Route::prefix('videos/{playlist:slug}')->name('videos.')->middleware('permission:create playlists')->group(function () {
-        Route::get('', [VideoController::class, 'table'])->name('table');
-        Route::get('create', [VideoController::class, 'create'])->name('create');
-        Route::post('store', [VideoController::class, 'store'])->name('store');
+    Route::prefix('videos')->name('videos.')->middleware('permission:create playlists')->group(function () {
+        Route::get('{playlist:slug}', [VideoController::class, 'table'])->name('table');
+        Route::get('{playlist:slug}/create', [VideoController::class, 'create'])->name('create');
+        Route::post('{playlist:slug}/store', [VideoController::class, 'store'])->name('store');
+        Route::get('{video:unique_video_id}/edit', [VideoController::class, 'edit'])->name('edit');
+        Route::put('{video:unique_video_id}/update', [VideoController::class, 'update'])->name('update');
+        Route::delete('{video:unique_video_id}/delete', [VideoController::class, 'destroy'])->name('destroy');
     });
 });
 

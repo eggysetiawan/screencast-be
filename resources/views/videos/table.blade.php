@@ -28,21 +28,36 @@
                             Edit
                         </x-edit-anchor>
                         <div x-data="{open: false}" class="inline">
-                            <x-modal state="open" x-show="open" title="Are you sure want to delete?"
-                                headerClass="bg-blue-800">
-                                <form action="{{ route('videos.destroy', $item->unique_video_id) }}" method="post"
-                                    class="inline mr-4">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit"
-                                        class="rounded-lg px-4 py-2 text-white bg-red-500 hover:bg-red-900 font-medium">
-                                        Yes,
-                                        Delete it!</button>
-                                </form>
-                                <button @click="open = false"
-                                    class="rounded-lg px-4 py-2 text-white bg-yellow-400 hover:bg-yellow-500 font-medium focus:outline-none">
-                                    I don't think so.
-                                </button>
+                            <x-modal state="open" x-show="open" headerClass="bg-blue-800">
+                                <x-slot name="header">
+                                    {{ __('Are you sure want to delete?') }}
+                                </x-slot>
+                                <div class="mb-6">
+                                    <h4 class="text-lg capitalize">{{ $item->title }}</h4>
+                                    <span class="text-xs uppercase text-gray-600">
+                                        Episode {{ $item->episode }}
+                                        -
+                                        Runtime {{ $item->runtime }}
+                                    </span>
+                                </div>
+                                <x-slot name="footer">
+                                    <form action="{{ route('videos.destroy', $item->unique_video_id) }}"
+                                        method="post" class="inline mr-4">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit"
+                                            class="rounded-lg px-4 py-2 text-white bg-red-500 hover:bg-red-900 font-medium">
+                                            Yes,
+                                            Delete it!</button>
+                                    </form>
+                                    <button @click="open = false"
+                                        class="rounded-lg px-4 py-2 text-white bg-yellow-400 hover:bg-yellow-500 font-medium focus:outline-none">
+                                        I don't think so.
+                                    </button>
+
+                                </x-slot>
+
+
 
                             </x-modal>
                             <button @click="open = true"

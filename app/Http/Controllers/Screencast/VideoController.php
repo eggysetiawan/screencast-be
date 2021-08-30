@@ -57,6 +57,7 @@ class VideoController extends Controller
 
     public function destroy(Video $video)
     {
+        $this->authorize('delete', $video->playlist);
         $video->delete();
         return back();
     }

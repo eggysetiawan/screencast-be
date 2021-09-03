@@ -26,7 +26,7 @@ class TagSeeder extends Seeder
             'Vue',
             'React',
             'React Native',
-            'Pascal'
+            'Livewire'
         ]);
 
         $tags->each(function ($tag) {

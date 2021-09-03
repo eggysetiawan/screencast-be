@@ -37,7 +37,9 @@ class PlaylistController extends Controller
     public function table()
     {
         $playlists = Playlist::query()
-            ->where('user_id', auth()->id())
+            ->when(!auth()->user()->hasRole('admin'), function ($query) {
+                $query->where('user_id', auth()->id());
+            })
             ->paginate(10);
 
         return view('playlists.table', compact('playlists'));

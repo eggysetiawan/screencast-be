@@ -17,7 +17,7 @@ class VideoController extends Controller
      */
     public function index(Playlist $playlist)
     {
-        $videos = $playlist->videos()->orderBy('episode');
+        $videos = $playlist->videos()->orderBy('episode')->get();
         return VideoResource::collection($videos);
     }
 
